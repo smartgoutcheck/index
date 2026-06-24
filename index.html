@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMART GOUT CHECK - Self-Care Gout Arthritis</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for Health Monitoring -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#16a34a',
+                            600: '#15803d',
+                            700: '#166534',
+                            800: '#14532d',
+                        },
+                        secondary: {
+                            500: '#0284c7',
+                            600: '#0369a1',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .active-nav {
+            background-color: #16a34a;
+            color: white !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white border-b border-slate-100 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="navigate('home')">
+                    <div class="bg-primary-600 text-white p-2.5 rounded-xl shadow-lg shadow-primary-600/30">
+                        <i class="fa-solid fa-heart-pulse text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold tracking-tight text-slate-900 block">SMART GOUT CHECK</span>
+                        <span class="text-xs font-semibold text-primary-600 uppercase tracking-wider block -mt-1">Self-Care Companion</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden xl:flex space-x-1">
+                    <button onclick="navigate('home')" id="nav-home" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all active-nav"><i class="fa-solid fa-house mr-1.5"></i>Beranda</button>
+                    <button onclick="navigate('edukasi')" id="nav-edukasi" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all"><i class="fa-solid fa-book-medical mr-1.5"></i>Edukasi</button>
+                    <button onclick="navigate('video')" id="nav-video" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all"><i class="fa-solid fa-circle-play mr-1.5"></i>Video Edukasi</button>
+                    <button onclick="navigate('diet')" id="nav-diet" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all"><i class="fa-solid fa-apple-whole mr-1.5"></i>Diet Purin</button>
+                    <button onclick="navigate('checklist')" id="nav-checklist" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all"><i class="fa-solid fa-list-check mr-1.5"></i>Checklist</button>
+                    <button onclick="navigate('monitoring')" id="nav-monitoring" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all"><i class="fa-solid fa-chart-line mr-1.5"></i>Monitoring</button>
+                    <button onclick="navigate('kuis')" id="nav-kuis" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all"><i class="fa-solid fa-vial mr-1.5"></i>Kuis</button>
+                    <button onclick="navigate('download')" id="nav-download" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all"><i class="fa-solid fa-download mr-1.5"></i>Materi</button>
+                    <button onclick="navigate('tentang')" id="nav-tentang" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all"><i class="fa-solid fa-info-circle mr-1.5"></i>Tentang</button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="xl:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-50 focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden xl:hidden bg-white border-b border-slate-100 px-4 pt-2 pb-4 space-y-1">
+            <button onclick="navigate('home'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-3"><i class="fa-solid fa-house w-5 text-primary-600"></i>Beranda</button>
+            <button onclick="navigate('edukasi'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-3"><i class="fa-solid fa-book-medical w-5 text-primary-600"></i>Edukasi</button>
+            <button onclick="navigate('video'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-3"><i class="fa-solid fa-circle-play w-5 text-primary-600"></i>Video Edukasi</button>
+            <button onclick="navigate('diet'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-3"><i class="fa-solid fa-apple-whole w-5 text-primary-600"></i>Diet Purin</button>
+            <button onclick="navigate('checklist'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-3"><i class="fa-solid fa-list-check w-5 text-primary-600"></i>Checklist</button>
+            <button onclick="navigate('monitoring'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-3"><i class="fa-solid fa-chart-line w-5 text-primary-600"></i>Monitoring</button>
+            <button onclick="navigate('kuis'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-3"><i class="fa-solid fa-vial w-5 text-primary-600"></i>Kuis</button>
+            <button onclick="navigate('download'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-3"><i class="fa-solid fa-download w-5 text-primary-600"></i>Materi</button>
+            <button onclick="navigate('tentang'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-3"><i class="fa-solid fa-info-circle w-5 text-primary-600"></i>Tentang</button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= HALAMAN BERANDA ================= -->
+        <section id="view-home" class="space-y-12">
+            <!-- Hero Banner -->
+            <div class="relative bg-gradient-to-br from-primary-800 to-emerald-950 rounded-3xl overflow-hidden shadow-2xl text-white py-16 px-8 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div class="space-y-6 max-w-2xl relative z-10">
+                    <span class="bg-primary-500/30 text-emerald-300 border border-emerald-500/30 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">Fhatim yuyur janggal</span>
+                    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">Selamat Datang di<br><span class="text-emerald-400">SMART GOUT CHECK</span></h1>
+                    <p class="text-emerald-100 text-lg leading-relaxed">
+                        Platform digital asuhan mandiri (self-care) gout arthritis untuk meningkatkan pengetahuan, memonitor status kesehatan, dan mengendalikan kadar asam urat secara terencana.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="navigate('edukasi')" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-graduation-cap"></i> Mulai Belajar
+                        </button>
+                        <button onclick="navigate('checklist')" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold px-6 py-3.5 rounded-xl transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check"></i> Checklist Harian
+                        </button>
+                    </div>
+                </div>
+                <div class="w-full max-w-sm relative z-10 flex justify-center">
+                    <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-inner w-full">
+                        <h4 class="text-emerald-300 font-bold text-sm uppercase tracking-wider mb-4"><i class="fa-solid fa-bolt mr-2"></i>Akses Cepat Fitur</h4>
+                        <div class="grid grid-cols-2 gap-3 text-slate-100">
+                            <div onclick="navigate('diet')" class="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all cursor-pointer text-center">
+                                <i class="fa-solid fa-carrot text-2xl text-emerald-400 mb-2"></i>
+                                <p class="text-xs font-semibold">Diet Rendah Purin</p>
+                            </div>
+                            <div onclick="navigate('monitoring')" class="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all cursor-pointer text-center">
+                                <i class="fa-solid fa-chart-line text-2xl text-emerald-400 mb-2"></i>
+                                <p class="text-xs font-semibold">Monitor Nyeri</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tujuan Website -->
+            <div class="space-y-6">
+                <div class="text-center max-w-2xl mx-auto space-y-2">
+                    <h2 class="text-3xl font-extrabold text-slate-900">Tujuan SMART GOUT CHECK</h2>
+                    <p class="text-slate-500 text-base">Membantu penderita agar mampu mengelola kondisi penyakit gout arthritis secara mandiri demi meningkatkan kualitas hidup.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all flex gap-4">
+                        <div class="bg-primary-50 text-primary-600 p-4 h-12 w-12 rounded-xl flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-lightbulb text-xl"></i></div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg mb-1">Meningkatkan Pengetahuan</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Memberikan pemahaman mendalam tentang patofisiologi, gejala, dan komplikasi gout arthritis.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all flex gap-4">
+                        <div class="bg-primary-50 text-primary-600 p-4 h-12 w-12 rounded-xl flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-shield-halved text-xl"></i></div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg mb-1">Meningkatkan Self-Care</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Mendorong kemandirian pasien berdasarkan Teori Perawatan Diri (Self-Care) Dorothea Orem.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all flex gap-4">
+                        <div class="bg-primary-50 text-primary-600 p-4 h-12 w-12 rounded-xl flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-clipboard-check text-xl"></i></div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg mb-1">Kepatuhan Diet & Obat</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Menyediakan alat bantu diet rendah purin dan pengawasan rutin asupan nutrisi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Konsep Utama (Orem) -->
+            <div class="bg-slate-100/80 rounded-2xl p-8 md:p-10 border border-slate-200/50 flex flex-col lg:flex-row gap-8 items-center">
+                <div class="lg:w-2/3 space-y-4">
+                    <h3 class="text-2xl font-extrabold text-slate-900">Landasan Konsep Keperawatan</h3>
+                    <p class="text-slate-600 leading-relaxed text-base">
+                        Website ini dikembangkan dengan dasar ilmiah <strong>Teori Self-Care Dorothea Orem</strong> dan <strong>Supportive-Educative Nursing System</strong>. Di sini, sistem keperawatan bertindak sebagai sarana edukasi pendukung agar penderita secara mandiri mampu merawat sendi, mendeteksi krisis kekambuhan, dan menerapkan pola hidup sehat yang stabil.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-white px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 shadow-sm"><i class="fa-solid fa-user-doctor mr-1.5 text-primary-600"></i> Dorothea Orem Theory</span>
+                        <span class="bg-white px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 shadow-sm"><i class="fa-solid fa-book-open-reader mr-1.5 text-primary-600"></i> Supportive-Educative</span>
+                        <span class="bg-white px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 shadow-sm"><i class="fa-solid fa-mobile-screen-button mr-1.5 text-primary-600"></i> Transformasi Digital</span>
+                    </div>
+                </div>
+                <div class="lg:w-1/3 flex justify-center">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 text-center shadow-sm max-w-xs">
+                        <div class="bg-primary-100 text-primary-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold"><i class="fa-solid fa-award"></i></div>
+                        <h4 class="font-extrabold text-slate-900 mb-1">Standar Keperawatan</h4>
+                        <p class="text-slate-500 text-xs">Mendukung kemandirian penuh pasien demi mengurangi frekuensi bengkak dan nyeri sendi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN EDUKASI ================= -->
+        <section id="view-edukasi" class="hidden space-y-12">
+            <div class="border-b border-slate-200 pb-5">
+                <h2 class="text-3xl font-extrabold text-slate-900">Edukasi Gout Arthritis</h2>
+                <p class="text-slate-500 mt-1">Kumpulan pengetahuan esensial tentang penumpukan asam urat, pencegahan, dan penanganan darurat.</p>
+            </div>
+
+            <!-- Definisi, Gejala, Penyebab Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Definisi -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+                    <div class="bg-emerald-50 text-emerald-600 w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <h3 class="text-xl font-extrabold text-slate-900">Definisi</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        <strong>Gout Arthritis</strong> (Asam Urat) adalah jenis radang sendi kronis yang terjadi akibat penumpukan kristal <em>monosodium urat</em> di dalam dan sekitar sendi. Ini memicu peradangan hebat, pembengkakan, dan rasa sakit yang tiba-tiba.
+                    </p>
+                </div>
+
+                <!-- Gejala -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+                    <div class="bg-red-50 text-red-600 w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <h3 class="text-xl font-extrabold text-slate-900">Gejala Utama</h3>
+                    <ul class="space-y-2 text-slate-600 text-sm">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle-exclamation text-red-500 mt-1"></i> <span>Nyeri sendi hebat mendadak (terutama malam/dini hari)</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle-exclamation text-red-500 mt-1"></i> <span>Sendi tampak kemerahan dan bengkak</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle-exclamation text-red-500 mt-1"></i> <span>Terasa hangat saat disentuh (radang akut)</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle-exclamation text-red-500 mt-1"></i> <span>Sendi menjadi kaku dan sulit digerakkan</span></li>
+                    </ul>
+                </div>
+
+                <!-- Penyebab -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+                    <div class="bg-amber-50 text-amber-600 w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-gears"></i></div>
+                    <h3 class="text-xl font-extrabold text-slate-900">Penyebab & Risiko</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Disebabkan oleh kondisi <strong>hiperurisemia</strong> (kadar asam urat darah &gt; 7 mg/dL untuk pria atau &gt; 6 mg/dL untuk wanita). Hal ini dipicu oleh:
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Konsumsi Purin Tinggi</span>
+                        <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Kurang Aktivitas Fisik</span>
+                        <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Obesitas</span>
+                        <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold">Gangguan Ginjal</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sendi yang Sering Terkena & Komplikasi -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Sendi Terkena -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 space-y-6">
+                    <h3 class="text-xl font-extrabold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-bone text-primary-600"></i> Sendi yang Rentan Terserang</h3>
+                    <p class="text-slate-500 text-sm">Gout arthritis memiliki kecenderungan tinggi menyerang sendi-sendi perifer berikut:</p>
+                    <div class="grid grid-cols-2 gap-3 text-slate-700 text-sm font-semibold">
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-check-circle text-primary-500"></i> Ibu Jari Kaki (Podagra)</div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-check-circle text-primary-500"></i> Sendi Lutut</div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-check-circle text-primary-500"></i> Pergelangan Kaki</div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-check-circle text-primary-500"></i> Siku & Pergelangan Tangan</div>
+                    </div>
+                </div>
+
+                <!-- Komplikasi -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 space-y-6">
+                    <h3 class="text-xl font-extrabold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-circle-radiation text-red-500"></i> Bahaya & Komplikasi Jangka Panjang</h3>
+                    <p class="text-slate-500 text-sm">Jika kadar asam urat dibiarkan tinggi tanpa kontrol yang rutin:</p>
+                    <div class="space-y-3">
+                        <div class="flex gap-3">
+                            <div class="bg-red-50 text-red-500 p-2 h-8 w-8 rounded-lg flex items-center justify-center font-bold text-xs flex-shrink-0">1</div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Kerusakan Sendi Permanen</h4>
+                                <p class="text-slate-500 text-xs">Erosi tulang rawan sendi menyebabkan disabilitas jangka panjang.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="bg-red-50 text-red-500 p-2 h-8 w-8 rounded-lg flex items-center justify-center font-bold text-xs flex-shrink-0">2</div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Tophi (Benjolan Asam Urat)</h4>
+                                <p class="text-slate-500 text-xs">Akumulasi kristal keras di kulit, jari, atau telinga yang terasa nyeri.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="bg-red-50 text-red-500 p-2 h-8 w-8 rounded-lg flex items-center justify-center font-bold text-xs flex-shrink-0">3</div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Batu Ginjal & Gangguan Fungsi Ginjal</h4>
+                                <p class="text-slate-500 text-xs">Kristal menyumbat sistem penyaringan ginjal, memicu gagal ginjal.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pre-Hospital & Post-Hospital Care -->
+            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                <div class="bg-gradient-to-r from-primary-800 to-primary-600 text-white p-6 md:p-8">
+                    <h3 class="text-2xl font-extrabold"><i class="fa-solid fa-house-medical mr-2"></i>Penanganan Serangan Gout Arthritis</h3>
+                    <p class="text-primary-100 text-sm mt-1">Panduan praktis tindakan mandiri pra-rumah sakit dan pasca-perawatan medis.</p>
+                </div>
+                <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+                    <!-- Pre-Hospital -->
+                    <div class="p-8 space-y-4">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider"><i class="fa-solid fa-truck-medical mr-1"></i> Pre-Hospital Care</span>
+                        <h4 class="text-xl font-bold text-slate-950">Tindakan Saat Terjadi Serangan Akut di Rumah</h4>
+                        <ul class="space-y-3.5 text-slate-600 text-sm">
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary-600 font-bold mt-0.5"><i class="fa-solid fa-circle-check"></i></span>
+                                <div>
+                                    <strong>Istirahatkan Sendi (Imobilisasi):</strong> Batasi gerakan pada sendi yang meradang, letakkan di atas bantal agar lebih tinggi dari dada (elevasi).
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary-600 font-bold mt-0.5"><i class="fa-solid fa-circle-check"></i></span>
+                                <div>
+                                    <strong>Kompres Dingin:</strong> Berikan kompres es berlapis kain pada sendi selama 15-20 menit untuk mengurangi bengkak dan mematirasakan rasa nyeri. <em>(Hindari kompres hangat saat fase meradang hebat)</em>.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary-600 font-bold mt-0.5"><i class="fa-solid fa-circle-check"></i></span>
+                                <div>
+                                    <strong>Konsumsi Air Putih Lebih Banyak:</strong> Membantu ginjal mengekskresikan asam urat dari dalam aliran darah dengan cepat.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary-600 font-bold mt-0.5"><i class="fa-solid fa-circle-check"></i></span>
+                                <div>
+                                    <strong>Hindari Obat Sembarangan:</strong> Jangan mengonsumsi aspirin karena dapat memengaruhi sekresi asam urat secara mendadak.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Post-Hospital -->
+                    <div class="p-8 space-y-4">
+                        <span class="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider"><i class="fa-solid fa-clipboard-user mr-1"></i> Post-Hospital Care</span>
+                        <h4 class="text-xl font-bold text-slate-950">Perawatan Setelah Dari Rumah Sakit/Klinik</h4>
+                        <ul class="space-y-3.5 text-slate-600 text-sm">
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary-600 font-bold mt-0.5"><i class="fa-solid fa-circle-check"></i></span>
+                                <div>
+                                    <strong>Kepatuhan Obat Jangka Panjang:</strong> Lanjutkan minum obat penurun asam urat (seperti Allopurinol) sesuai resep dokter, bahkan saat gejala sudah reda.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary-600 font-bold mt-0.5"><i class="fa-solid fa-circle-check"></i></span>
+                                <div>
+                                    <strong>Cek Laboratorium Rutin:</strong> Pantau kadar asam urat secara periodik di laboratorium terdekat (target normal &lt; 6 mg/dL).
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary-600 font-bold mt-0.5"><i class="fa-solid fa-circle-check"></i></span>
+                                <div>
+                                    <strong>Modifikasi Gaya Hidup:</strong> Kendalikan berat badan agar tidak obesitas, lakukan aktivitas fisik aerobik ringan secara teratur.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary-600 font-bold mt-0.5"><i class="fa-solid fa-circle-check"></i></span>
+                                <div>
+                                    <strong>Pencatatan Mandiri:</strong> Catat setiap serangan kambuh (lokasi, skala, pemicu makanan) menggunakan menu <em>Monitoring</em> di website ini untuk bahan konsultasi ke dokter.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN VIDEO EDUKASI ================= -->
+        <section id="view-video" class="hidden space-y-12">
+            <div class="border-b border-slate-200 pb-5">
+                <h2 class="text-3xl font-extrabold text-slate-900">Video Edukasi Interaktif</h2>
+                <p class="text-slate-500 mt-1">Tonton dan pelajari video panduan penatalaksanaan asuhan mandiri penderita gout arthritis.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+                <!-- Video Player Container (Lefthand/Main Side) -->
+                <div class="lg:col-span-7 bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+                    <div class="relative w-full overflow-hidden rounded-2xl shadow-inner bg-slate-950 aspect-video">
+                        <!-- Privacy Enhanced / No Cookie Responsive IFrame Player to Prevent Error 153 -->
+                        <iframe 
+                            id="youtube-player" 
+                            class="absolute top-0 left-0 w-full h-full" 
+                            src="https://www.youtube-nocookie.com/embed/A9-VdQhO4PY" 
+                            title="Video Edukasi Gout Arthritis" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    
+                    <!-- Direct Fallback Option for Sandboxed Environments like Google Sites / Canvas -->
+                    <div class="bg-amber-50 border border-amber-100 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">⚠️</span>
+                            <div class="text-left">
+                                <p class="font-extrabold text-amber-900 text-xs">Video terblokir atau memicu error?</p>
+                                <p class="text-amber-700 text-[11px] leading-relaxed">Browser Anda mungkin membatasi pelacakan iFrame. Tekan tombol kanan untuk menonton langsung.</p>
+                            </div>
+                        </div>
+                        <a href="https://youtu.be/A9-VdQhO4PY" target="_blank" class="bg-red-600 hover:bg-red-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 whitespace-nowrap transition-all shadow-md shadow-red-600/20 w-full sm:w-auto">
+                            <i class="fa-brands fa-youtube text-base"></i> Buka di YouTube
+                        </a>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2">
+                        <div class="flex items-center gap-2 text-primary-600">
+                            <i class="fa-solid fa-circle-play text-xl"></i>
+                            <span class="font-extrabold text-sm text-slate-900">Media Audio Visual SMART GOUT CHECK</span>
+                        </div>
+                        <span class="bg-primary-50 text-primary-700 px-3 py-1 rounded-full text-xs font-bold"><i class="fa-regular fa-clock mr-1"></i>Durasi Edukasi</span>
+                    </div>
+                </div>
+
+                <!-- Video Summary & Notes (Righthand Side) -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-8 rounded-3xl border border-slate-700 shadow-md space-y-6">
+                        <h3 class="text-xl font-bold text-emerald-400 flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb"></i> Poin Pembelajaran Penting
+                        </h3>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Video di samping membahas secara runut langkah preventif, deteksi dini krisis nyeri sendi, serta pentingnya komitmen jangka panjang dalam mengendalikan kadar purin tubuh.
+                        </p>
+                        <div class="space-y-4 pt-2">
+                            <div class="flex items-start gap-3">
+                                <span class="bg-emerald-500/20 text-emerald-400 p-2 rounded-xl flex-shrink-0 text-sm"><i class="fa-solid fa-droplet"></i></span>
+                                <div>
+                                    <h4 class="font-extrabold text-sm text-white">Patofisiologi Asam Urat</h4>
+                                    <p class="text-slate-400 text-xs mt-0.5">Memahami bagaimana kristal natrium urat terbentuk pada sendi akibat sisa metabolisme makanan kaya purin.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="bg-emerald-500/20 text-emerald-400 p-2 rounded-xl flex-shrink-0 text-sm"><i class="fa-solid fa-capsules"></i></span>
+                                <div>
+                                    <h4 class="font-extrabold text-sm text-white">Kepatuhan Terapi & Kontrol</h4>
+                                    <p class="text-slate-400 text-xs mt-0.5">Mengapa minum obat dari dokter secara rutin sangat menentukan berkurangnya frekuensi kekambuhan akut.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="bg-emerald-500/20 text-emerald-400 p-2 rounded-xl flex-shrink-0 text-sm"><i class="fa-solid fa-plate-wheat"></i></span>
+                                <div>
+                                    <h4 class="font-extrabold text-sm text-white">Prinsip Pokok Diet Gout</h4>
+                                    <p class="text-slate-400 text-xs mt-0.5">Memilah menu makanan tinggi purin dengan cerdas untuk mencegah serangan dadakan.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Call to Action -->
+                    <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 flex items-center gap-4">
+                        <span class="text-3xl">📝</span>
+                        <div class="text-xs">
+                            <span class="font-extrabold text-slate-900 block mb-1">Sudah Selesai Menonton?</span>
+                            Mari uji ingatan dan pemahaman Anda tentang materi asuhan mandiri ini di menu <button onclick="navigate('kuis')" class="text-primary-600 font-extrabold hover:underline">Kuis Evaluasi</button> sekarang!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN DIET RENDAH PURIN ================= -->
+        <section id="view-diet" class="hidden space-y-12">
+            <div class="border-b border-slate-200 pb-5">
+                <h2 class="text-3xl font-extrabold text-slate-900">Diet Rendah Purin</h2>
+                <p class="text-slate-500 mt-1">Panduan pola makan harian terstruktur guna mencegah akumulasi kristal asam urat.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Dianjurkan (Dianjurkan) -->
+                <div class="bg-emerald-50/50 p-8 rounded-3xl border border-emerald-100 space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-emerald-500 text-white p-3 rounded-2xl"><i class="fa-solid fa-thumbs-up text-xl"></i></div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-slate-900">Makanan yang Dianjurkan</h3>
+                            <p class="text-emerald-800 text-xs font-semibold">Mengandung kadar purin sangat rendah & aman dikonsumsi harian</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-emerald-100">
+                            <span class="text-3xl">🥛</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Susu & Produk Olahan Rendah Lemak</h4>
+                                <p class="text-slate-500 text-xs">Membantu mempercepat pembuangan asam urat melalui urin.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-emerald-100">
+                            <span class="text-3xl">🥦</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Sayuran Rendah Purin</h4>
+                                <p class="text-slate-500 text-xs">Sawi, wortel, mentimun, labu siam, terong aman dikonsumsi porsi wajar.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-emerald-100">
+                            <span class="text-3xl">🍊</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Buah Kaya Vitamin C</h4>
+                                <p class="text-slate-500 text-xs">Jeruk, kiwi, stroberi memiliki efek menurunkan asam urat darah.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-emerald-100">
+                            <span class="text-3xl">💧</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Air Putih Berlimpah (&gt; 2 Liter/Hari)</h4>
+                                <p class="text-slate-500 text-xs">Wajib mengonsumsi air minimal 8-10 gelas sehari secara bertahap.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dibatasi (Dibatasi) -->
+                <div class="bg-red-50/50 p-8 rounded-3xl border border-red-100 space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-red-500 text-white p-3 rounded-2xl"><i class="fa-solid fa-circle-minus text-xl"></i></div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-slate-900">Makanan yang Harus Dibatasi/Dihindari</h3>
+                            <p class="text-red-800 text-xs font-semibold">Mengandung purin tinggi yang memicu bengkak parah</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-red-100">
+                            <span class="text-3xl">🍖</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Jeroan & Daging Merah Berlebih</h4>
+                                <p class="text-slate-500 text-xs">Hati, babat, usus, limpa, serta daging sapi/kambing porsi besar wajib dijauhi.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-red-100">
+                            <span class="text-3xl">🦐</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Seafood Tertentu</h4>
+                                <p class="text-slate-500 text-xs">Udang, cumi-cumi, kepiting, ikan sarden, kerang kaya akan purin tinggi.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-red-100">
+                            <span class="text-3xl">🍺</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Minuman Beralkohol</h4>
+                                <p class="text-slate-500 text-xs">Alkohol menghambat metabolisme asam urat dan merusak ginjal.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-red-100">
+                            <span class="text-3xl">🍩</span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Makanan/Minuman Tinggi Fruktosa</h4>
+                                <p class="text-slate-500 text-xs">Soda manis, jus kemasan, dan pemanis sirup jagung memicu asam urat naik.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Diet Gout -->
+            <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-2xl p-8 flex flex-col md:flex-row items-center gap-6 justify-between border border-slate-700">
+                <div class="space-y-2 max-w-xl">
+                    <h3 class="text-xl font-bold text-emerald-400"><i class="fa-solid fa-lightbulb mr-2"></i>Tips Menjaga Diet Gout</h3>
+                    <p class="text-slate-300 text-sm">
+                        Konsumsilah makanan segar yang diolah sendiri (hindari produk instan/kalengan). Saat makan di restoran, pilih opsi tumis atau rebus dibanding gorengan tepung berminyak jenuh.
+                    </p>
+                </div>
+                <div class="flex-shrink-0 bg-slate-800 p-4 rounded-xl border border-slate-700 text-center">
+                    <span class="text-3xl block">📋</span>
+                    <span class="text-xs font-bold uppercase text-slate-400 tracking-widest mt-1 block">Rekomendasi</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN SELF-CARE CHECKLIST ================= -->
+        <section id="view-checklist" class="hidden space-y-12">
+            <div class="border-b border-slate-200 pb-5">
+                <h2 class="text-3xl font-extrabold text-slate-900">Checklist Mandiri Harian</h2>
+                <p class="text-slate-500 mt-1">Lakukan evaluasi perawatan diri mandiri (self-care) Anda setiap harinya.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Checklist List -->
+                <div class="lg:col-span-2 bg-white p-8 rounded-3xl shadow-sm border border-slate-100 space-y-6">
+                    <h3 class="text-xl font-extrabold text-slate-950 flex items-center gap-2"><i class="fa-solid fa-calendar-check text-primary-600"></i> Rutinitas Perawatan Hari Ini</h3>
+                    <p class="text-slate-500 text-xs -mt-3">Centang aktivitas yang berhasil Anda lakukan hari ini untuk melihat tingkat kepatuhan asuhan mandiri Anda.</p>
+
+                    <div class="space-y-4 pt-2">
+                        <label class="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 cursor-pointer transition-all">
+                            <input type="checkbox" onchange="calculateChecklistScore()" class="w-6 h-6 text-primary-600 border-slate-300 rounded focus:ring-primary-500 accent-primary-600 harian-chk">
+                            <span class="text-slate-700 font-semibold text-sm">Minum obat sesuai anjuran dokter (Allopurinol / pereda nyeri)</span>
+                        </label>
+                        <label class="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 cursor-pointer transition-all">
+                            <input type="checkbox" onchange="calculateChecklistScore()" class="w-6 h-6 text-primary-600 border-slate-300 rounded focus:ring-primary-500 accent-primary-600 harian-chk">
+                            <span class="text-slate-700 font-semibold text-sm">Minum air putih minimal 8-10 gelas hari ini</span>
+                        </label>
+                        <label class="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 cursor-pointer transition-all">
+                            <input type="checkbox" onchange="calculateChecklistScore()" class="w-6 h-6 text-primary-600 border-slate-300 rounded focus:ring-primary-500 accent-primary-600 harian-chk">
+                            <span class="text-slate-700 font-semibold text-sm">Menghindari konsumsi makanan tinggi purin (jeroan, seafood)</span>
+                        </label>
+                        <label class="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 cursor-pointer transition-all">
+                            <input type="checkbox" onchange="calculateChecklistScore()" class="w-6 h-6 text-primary-600 border-slate-300 rounded focus:ring-primary-500 accent-primary-600 harian-chk">
+                            <span class="text-slate-700 font-semibold text-sm">Melakukan aktivitas fisik ringan / peregangan ringan</span>
+                        </label>
+                        <label class="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 cursor-pointer transition-all">
+                            <input type="checkbox" onchange="calculateChecklistScore()" class="w-6 h-6 text-primary-600 border-slate-300 rounded focus:ring-primary-500 accent-primary-600 harian-chk">
+                            <span class="text-slate-700 font-semibold text-sm">Tidak mengalami serangan nyeri sendi akut hebat hari ini</span>
+                        </label>
+                        <label class="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 cursor-pointer transition-all">
+                            <input type="checkbox" onchange="calculateChecklistScore()" class="w-6 h-6 text-primary-600 border-slate-300 rounded focus:ring-primary-500 accent-primary-600 harian-chk">
+                            <span class="text-slate-700 font-semibold text-sm">Istirahat cukup (Tidur berkualitas 7-8 jam)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Live Score Dashboard -->
+                <div class="bg-slate-100 p-8 rounded-3xl border border-slate-200/60 space-y-6 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-extrabold text-slate-900">Hasil Evaluasi</h3>
+                        <p class="text-slate-500 text-xs">Skor dihitung otomatis berdasarkan aktivitas yang berhasil Anda centang.</p>
+
+                        <!-- Score Display -->
+                        <div class="text-center py-6 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                            <span class="text-xs font-extrabold text-slate-400 uppercase tracking-widest block">Skor Self-Care</span>
+                            <span id="score-text" class="text-6xl font-black text-slate-900 block">0<span class="text-xl text-slate-400 font-bold">/6</span></span>
+                            <div class="px-4 py-1.5 rounded-full text-xs font-bold inline-block" id="score-badge">Perlu Perhatian ❗</div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="w-full bg-slate-200 rounded-full h-3">
+                            <div class="bg-primary-500 h-3 rounded-full transition-all duration-500" id="score-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Guidance Table -->
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200 text-xs space-y-2 shadow-sm mt-4">
+                        <h4 class="font-bold text-slate-900 mb-1">Panduan Tingkat Self-Care:</h4>
+                        <div class="flex justify-between py-1 border-b border-slate-100">
+                            <span class="font-semibold text-slate-600">5-6 Checklist Terpenuhi</span>
+                            <span class="text-primary-600 font-extrabold">Baik 👍</span>
+                        </div>
+                        <div class="flex justify-between py-1 border-b border-slate-100">
+                            <span class="font-semibold text-slate-600">3-4 Checklist Terpenuhi</span>
+                            <span class="text-amber-500 font-extrabold">Cukup ⚠️</span>
+                        </div>
+                        <div class="flex justify-between py-1">
+                            <span class="font-semibold text-slate-600">&le; 2 Checklist Terpenuhi</span>
+                            <span class="text-red-500 font-extrabold">Perlu Perhatian ❗</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN MONITORING KESEHATAN ================= -->
+        <section id="view-monitoring" class="hidden space-y-12">
+            <div class="border-b border-slate-200 pb-5">
+                <h2 class="text-3xl font-extrabold text-slate-900">Monitoring Kesehatan Mandiri</h2>
+                <p class="text-slate-500 mt-1">Catat dan tinjau perkembangan skala nyeri sendi serta pola makan harian Anda.</p>
+            </div>
+
+            <!-- Logger Form & Live Graphic -->
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Log Form -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 space-y-6">
+                    <h3 class="text-xl font-extrabold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-square-plus text-primary-600"></i> Tambah Catatan Baru</h3>
+                    
+                    <form id="healthForm" onsubmit="addHealthRecord(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Skala Nyeri (0 - 10)</label>
+                            <div class="flex items-center gap-4">
+                                <input type="range" id="painScale" min="0" max="10" value="0" oninput="updatePainValue(this.value)" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary-600">
+                                <span id="painValueLabel" class="bg-slate-100 font-bold border border-slate-200 w-12 text-center py-1 rounded-lg text-sm">0</span>
+                            </div>
+                            <span class="text-[10px] text-slate-400 mt-1 block">0 = Tidak Nyeri, 10 = Nyeri Tak Tertahankan</span>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Lokasi Nyeri Utama</label>
+                            <select id="painLocation" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary-500 focus:border-primary-500">
+                                <option value="Tidak Ada">Tidak Ada Nyeri</option>
+                                <option value="Ibu Jari Kaki Kiri">Ibu Jari Kaki Kiri</option>
+                                <option value="Ibu Jari Kaki Kanan">Ibu Jari Kaki Kanan</option>
+                                <option value="Lutut Kiri">Lutut Kiri</option>
+                                <option value="Lutut Kanan">Lutut Kanan</option>
+                                <option value="Pergelangan Kaki">Pergelangan Kaki</option>
+                                <option value="Siku">Siku</option>
+                                <option value="Pergelangan Tangan">Pergelangan Tangan</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Asupan Makanan Terbanyak Hari Ini</label>
+                            <input type="text" id="foodIntake" placeholder="Contoh: Sayur, nasi merah, ikan porsi kecil" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Aktivitas Fisik</label>
+                                <input type="text" id="activity" placeholder="Contoh: Jalan pagi 15 menit" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Keluhan Lain</label>
+                                <input type="text" id="complaints" placeholder="Contoh: Kaku di pagi hari" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-md shadow-primary-600/10 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Catatan Harian
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Live Graphic & Stats -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-extrabold text-slate-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-line text-primary-600"></i> Tren Skala Nyeri Harian</h3>
+                        <div class="h-64 relative">
+                            <canvas id="painChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Goal Cards -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-center gap-3.5 mt-6">
+                        <div class="bg-primary-100 text-primary-700 p-3 rounded-xl"><i class="fa-solid fa-circle-info"></i></div>
+                        <div class="text-xs text-slate-500 leading-relaxed">
+                            <strong class="text-slate-800 block mb-0.5">Tujuan Monitoring Mandiri</strong>
+                            Mendeteksi dini kekambuhan, membantu mengukur dampak asupan makanan terhadap tingkat nyeri sendi, dan sebagai bahan evaluasi klinis bersama dokter.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Logs Table -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 space-y-4">
+                <h3 class="text-xl font-extrabold text-slate-900"><i class="fa-solid fa-clock-rotate-left text-primary-600 mr-2"></i>Riwayat Catatan Kesehatan</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-100 text-slate-500">
+                                <th class="py-3 px-4 font-bold">Tanggal</th>
+                                <th class="py-3 px-4 font-bold">Skala Nyeri</th>
+                                <th class="py-3 px-4 font-bold">Lokasi Sendi</th>
+                                <th class="py-3 px-4 font-bold">Pola Makan</th>
+                                <th class="py-3 px-4 font-bold">Aktivitas</th>
+                                <th class="py-3 px-4 font-bold">Keluhan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody" class="divide-y divide-slate-50 text-slate-700 font-medium">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN KUIS EVALUASI ================= -->
+        <section id="view-kuis" class="hidden space-y-12">
+            <div class="border-b border-slate-200 pb-5">
+                <h2 class="text-3xl font-extrabold text-slate-900">Kuis Evaluasi Pengetahuan</h2>
+                <p class="text-slate-500 mt-1">Uji pemahaman Anda seputar perawatan mandiri gout arthritis setelah mempelajari materi edukasi.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Quiz Area -->
+                <div class="lg:col-span-2 bg-white p-8 rounded-3xl shadow-sm border border-slate-100 space-y-6">
+                    <!-- Progress of Quiz -->
+                    <div class="flex justify-between items-center text-xs text-slate-400 font-bold uppercase tracking-wider">
+                        <span>Kuis Gout Arthritis</span>
+                        <span id="quiz-progress">Pertanyaan 1 dari 5</span>
+                    </div>
+
+                    <!-- Quiz Question Container -->
+                    <div class="space-y-6" id="quiz-card">
+                        <h3 class="text-xl font-bold text-slate-900" id="quiz-question">Apakah penyebab utama penyakit gout arthritis?</h3>
+                        
+                        <div class="grid gap-3" id="quiz-options">
+                            <!-- Options generated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Next Button -->
+                    <div class="flex justify-end pt-4">
+                        <button id="next-quiz-btn" onclick="nextQuizQuestion()" disabled class="bg-primary-600 hover:bg-primary-700 text-white font-bold px-6 py-3 rounded-xl disabled:opacity-50 transition-all flex items-center gap-2">
+                            <span>Pertanyaan Selanjutnya</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Results Panel -->
+                <div class="bg-slate-100 p-8 rounded-3xl border border-slate-200/60 flex flex-col justify-between">
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-extrabold text-slate-950">Statistik Kuis Anda</h3>
+                        
+                        <!-- Circular Progress Score -->
+                        <div class="text-center py-6 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block">Skor Terakhir Anda</span>
+                            <span id="quiz-score-text" class="text-6xl font-black text-slate-900 block">-</span>
+                            <div class="px-4 py-1.5 rounded-full text-xs font-bold inline-block hidden" id="quiz-badge"></div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 text-xs space-y-2 leading-relaxed text-slate-500">
+                            <strong class="text-slate-800 block mb-1">Panduan Hasil:</strong>
+                            <p><strong class="text-primary-600">80 - 100%:</strong> Baik sekali, Anda memahami asuhan mandiri dengan sempurna.</p>
+                            <p><strong class="text-amber-500">60 - 79%:</strong> Cukup, tinjau kembali halaman diet.</p>
+                            <p><strong class="text-red-500">&lt; 60%:</strong> Perlu belajar ulang, silakan baca materi lagi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN DOWNLOAD MATERI ================= -->
+        <section id="view-download" class="hidden space-y-12">
+            <div class="border-b border-slate-200 pb-5">
+                <h2 class="text-3xl font-extrabold text-slate-900">E-Unduh & Cetak Materi</h2>
+                <p class="text-slate-500 mt-1">Ekspor resume asuhan kesehatan mandiri atau cetak rangkuman diet rendah purin Anda.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1: Edukasi Gout PDF -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-red-50 text-red-600 w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-file-pdf"></i></div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">Panduan Edukasi Gout Arthritis</h3>
+                            <p class="text-slate-500 text-xs mt-1">File ringkas materi definisi, gejala, komplikasi, penanganan darurat pre & post hospital.</p>
+                        </div>
+                    </div>
+                    <button onclick="downloadDocument('edukasi')" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> Cetak / Unduh Buku Saku
+                    </button>
+                </div>
+
+                <!-- Card 2: Diet Rendah Purin PDF -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-emerald-50 text-emerald-600 w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">Panduan Diet Rendah Purin</h3>
+                            <p class="text-slate-500 text-xs mt-1">Daftar lengkap tabel makanan yang dianjurkan dan makanan berbahaya bagi asam urat.</p>
+                        </div>
+                    </div>
+                    <button onclick="downloadDocument('diet')" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> Cetak Tabel Makanan
+                    </button>
+                </div>
+
+                <!-- Card 3: Export Report -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 text-blue-600 w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-hospital-user"></i></div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">Laporan Monitoring Kesehatan</h3>
+                            <p class="text-slate-500 text-xs mt-1">Ekspor riwayat keluhan, tingkat nyeri harian, dan checklist asuhan mandiri Anda.</p>
+                        </div>
+                    </div>
+                    <button onclick="downloadDocument('laporan')" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 rounded-xl text-xs transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-print"></i> Ekspor & Cetak Laporan
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HALAMAN TENTANG ================= -->
+        <section id="view-tentang" class="hidden space-y-12">
+            <div class="border-b border-slate-200 pb-5">
+                <h2 class="text-3xl font-extrabold text-slate-900">Tentang SMART GOUT CHECK</h2>
+                <p class="text-slate-500 mt-1">Inovasi media edukasi digital modern asuhan keperawatan mandiri pasien gout arthritis.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-extrabold text-slate-900 leading-snug">Metode Pemantauan Kesehatan Masa Kini</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        <strong>SMART GOUT CHECK</strong> (Self-Management and Awareness Resource Technology for Gout Care and Health Tracking) adalah aplikasi berbasis website yang dirancang untuk mendukung asuhan mandiri (self-care) penderita gout arthritis. Dengan mengadopsi teori keperawatan Dorothea Orem, aplikasi ini memberdayakan pengguna agar proaktif memantau status kesehatannya setiap hari.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        Kami menyadari bahwa kepatuhan diet rendah purin dan pengenalan tanda radang dini merupakan faktor esensial dalam mencegah kecacatan sendi (tophi). Melalui website ini, kami berharap angka kunjungan darurat rumah sakit akibat serangan gout arthritis dapat diturunkan.
+                    </p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+                    <h4 class="font-extrabold text-slate-900 text-lg"><i class="fa-solid fa-users text-primary-600 mr-2"></i>Sasaran Pengguna Aplikasi</h4>
+                    <div class="space-y-3 text-slate-600 text-sm">
+                        <div class="flex items-center gap-3"><span class="bg-primary-50 text-primary-600 p-1.5 h-7 w-7 rounded-lg flex items-center justify-center font-bold text-xs">A</span> Penderita gout arthritis aktif</div>
+                        <div class="flex items-center gap-3"><span class="bg-primary-50 text-primary-600 p-1.5 h-7 w-7 rounded-lg flex items-center justify-center font-bold text-xs">B</span> Lansia dengan keluhan nyeri sendi kaki</div>
+                        <div class="flex items-center gap-3"><span class="bg-primary-50 text-primary-600 p-1.5 h-7 w-7 rounded-lg flex items-center justify-center font-bold text-xs">C</span> Mahasiswa Keperawatan & Praktisi Kesehatan</div>
+                        <div class="flex items-center gap-3"><span class="bg-primary-50 text-primary-600 p-1.5 h-7 w-7 rounded-lg flex items-center justify-center font-bold text-xs">D</span> Kader Posyandu Lansia</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 text-slate-400 py-12 mt-16 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 border-b border-slate-800">
+                <div class="space-y-1">
+                    <span class="text-white font-extrabold text-sm tracking-wide">SMART GOUT CHECK</span>
+                    <p class="text-slate-400">Media Edukasi Mandiri Self-Care Gout Arthritis Berbasis Website</p>
+                </div>
+                <div class="flex items-center gap-3 text-emerald-400 font-bold text-xs">
+                    <i class="fa-solid fa-code"></i> Versi App 1.2 (beta)
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center">
+                <p>&copy; 2026 - Inovasi Teknologi Kesehatan. All Rights Reserved.</p>
+                <div class="space-y-1 md:text-right">
+                    <p class="font-bold text-slate-200 text-xs">Program Studi S1 Keperawatan</p>
+                    <p class="text-[11px] text-slate-500">Universitas Ngudi Waluyo</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Modal Notifications (Replacement of Alert) -->
+    <div id="modalAlert" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 text-center space-y-4 scale-95 transition-transform duration-300 transform" id="modalAlertContainer">
+            <div id="modalAlertIcon" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl font-bold"></div>
+            <div>
+                <h4 id="modalAlertTitle" class="text-lg font-bold text-slate-900"></h4>
+                <p id="modalAlertDesc" class="text-slate-500 text-sm mt-1 leading-relaxed"></p>
+            </div>
+            <button onclick="closeModalAlert()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs transition-all">Selesai</button>
+        </div>
+    </div>
+
+    <!-- Script Section -->
+    <script>
+        // SPA Navigation Logic
+        function navigate(viewName) {
+            // Hide all views
+            const views = ['home', 'edukasi', 'video', 'diet', 'checklist', 'monitoring', 'kuis', 'download', 'tentang'];
+            views.forEach(view => {
+                document.getElementById(`view-${view}`).classList.add('hidden');
+                document.getElementById(`nav-${view}`).classList.remove('active-nav');
+            });
+
+            // Show active view
+            document.getElementById(`view-${viewName}`).classList.remove('hidden');
+            document.getElementById(`nav-${viewName}`).classList.add('active-nav');
+
+            // Handle YouTube Video Play/Stop Reset (Bypass domain block with privacy-enhanced URL)
+            const ytIframe = document.getElementById('youtube-player');
+            if (ytIframe) {
+                if (viewName === 'video') {
+                    // Reset to the valid privacy-enhanced embed url
+                    ytIframe.src = "https://www.youtube-nocookie.com/embed/A9-VdQhO4PY";
+                } else {
+                    // Stop audio and remove reference safely
+                    ytIframe.src = "about:blank";
+                }
+            }
+
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.className = 'fa-solid fa-xmark text-2xl';
+            } else {
+                menu.classList.add('hidden');
+                icon.className = 'fa-solid fa-bars text-2xl';
+            }
+        }
+
+        // Custom Modal UI
+        function showNotification(title, message, type = 'success') {
+            const modal = document.getElementById('modalAlert');
+            const container = document.getElementById('modalAlertContainer');
+            const icon = document.getElementById('modalAlertIcon');
+            const mTitle = document.getElementById('modalAlertTitle');
+            const mDesc = document.getElementById('modalAlertDesc');
+
+            mTitle.textContent = title;
+            mDesc.textContent = message;
+
+            if (type === 'success') {
+                icon.className = 'w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto text-3xl font-bold';
+                icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            } else {
+                icon.className = 'w-16 h-16 rounded-full bg-red-50 text-red-600 flex items-center justify-center mx-auto text-3xl font-bold';
+                icon.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i>';
+            }
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                container.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeModalAlert() {
+            const modal = document.getElementById('modalAlert');
+            const container = document.getElementById('modalAlertContainer');
+            modal.classList.add('opacity-0');
+            container.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // ================= CHECKLIST FUNCTIONALITY =================
+        function calculateChecklistScore() {
+            const checkboxes = document.querySelectorAll('.harian-chk');
+            let checkedCount = 0;
+            checkboxes.forEach(chk => {
+                if (chk.checked) checkedCount++;
+            });
+
+            const scoreText = document.getElementById('score-text');
+            const bar = document.getElementById('score-bar');
+            const badge = document.getElementById('score-badge');
+
+            scoreText.innerHTML = `${checkedCount}<span class="text-xl text-slate-400 font-bold">/6</span>`;
+            bar.style.width = `${(checkedCount / 6) * 100}%`;
+
+            if (checkedCount >= 5) {
+                badge.className = 'px-4 py-1.5 rounded-full text-xs font-bold inline-block bg-emerald-100 text-emerald-800';
+                badge.innerHTML = 'Self-Care Baik 👍';
+            } else if (checkedCount >= 3) {
+                badge.className = 'px-4 py-1.5 rounded-full text-xs font-bold inline-block bg-amber-100 text-amber-800';
+                badge.innerHTML = 'Self-Care Cukup ⚠️';
+            } else {
+                badge.className = 'px-4 py-1.5 rounded-full text-xs font-bold inline-block bg-red-100 text-red-800';
+                badge.innerHTML = 'Perlu Perhatian ❗';
+            }
+        }
+
+        // ================= MONITORING / LOGGING SYSTEM =================
+        let painChartInstance = null;
+        const healthRecords = [
+            { date: '2026-06-20', pain: 6, location: 'Ibu Jari Kaki Kiri', food: 'Soto babat & emping', activity: 'Tidak ada', complaints: 'Nyeri berdenyut malam hari' },
+            { date: '2026-06-21', pain: 4, location: 'Ibu Jari Kaki Kiri', food: 'Nasi putih, sayur wortel', activity: 'Peregangan sendi', complaints: 'Nyeri berkurang saat dikompres es' },
+            { date: '2026-06-22', pain: 3, location: 'Ibu Jari Kaki Kiri', food: 'Nasi merah, sayur sop', activity: 'Jalan santai', complaints: 'Sudah bisa ditekuk' },
+            { date: '2026-06-23', pain: 1, location: 'Tidak Ada', food: 'Susu kedelai, pisang ambon', activity: 'Senam lansia 15 menit', complaints: 'Hampir tidak kaku lagi' }
+        ];
+
+        function updatePainValue(val) {
+            document.getElementById('painValueLabel').textContent = val;
+        }
+
+        function renderHealthTable() {
+            const tableBody = document.getElementById('historyTableBody');
+            tableBody.innerHTML = '';
+            
+            // Render in reverse order to see latest first
+            [...healthRecords].reverse().forEach(rec => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-slate-100 hover:bg-slate-50/50';
+                
+                let painColor = 'text-emerald-600 bg-emerald-50';
+                if (rec.pain >= 7) painColor = 'text-red-600 bg-red-50';
+                else if (rec.pain >= 4) painColor = 'text-amber-600 bg-amber-50';
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-semibold text-xs whitespace-nowrap">${rec.date}</td>
+                    <td class="py-3 px-4"><span class="px-2.5 py-1 text-xs font-extrabold rounded-lg ${painColor}">Skala ${rec.pain}</span></td>
+                    <td class="py-3 px-4 text-xs font-bold text-slate-800">${rec.location}</td>
+                    <td class="py-3 px-4 text-xs">${rec.food}</td>
+                    <td class="py-3 px-4 text-xs">${rec.activity}</td>
+                    <td class="py-3 px-4 text-xs italic text-slate-500">${rec.complaints || '-'}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function initHealthChart() {
+            const ctx = document.getElementById('painChart').getContext('2d');
+            
+            const labels = healthRecords.map(rec => {
+                const parts = rec.date.split('-');
+                return `${parts[2]}/${parts[1]}`;
+            });
+            const dataValues = healthRecords.map(rec => rec.pain);
+
+            if (painChartInstance) {
+                painChartInstance.destroy();
+            }
+
+            painChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Skala Nyeri',
+                        data: dataValues,
+                        borderColor: '#16a34a',
+                        backgroundColor: 'rgba(22, 163, 74, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#16a34a',
+                        pointHoverRadius: 7,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 10,
+                            ticks: { stepSize: 1 }
+                        }
+                    }
+                }
+            });
+        }
+
+        function addHealthRecord(e) {
+            e.preventDefault();
+            const pain = parseInt(document.getElementById('painScale').value);
+            const location = document.getElementById('painLocation').value;
+            const food = document.getElementById('foodIntake').value;
+            const activity = document.getElementById('activity').value;
+            const complaints = document.getElementById('complaints').value;
+            
+            const today = new Date();
+            const dateStr = today.toISOString().split('T')[0];
+
+            healthRecords.push({
+                date: dateStr,
+                pain: pain,
+                location: location,
+                food: food,
+                activity: activity,
+                complaints: complaints
+            });
+
+            // Re-render
+            renderHealthTable();
+            initHealthChart();
+
+            // Reset Form & Show Info
+            document.getElementById('healthForm').reset();
+            document.getElementById('painScale').value = 0;
+            updatePainValue(0);
+
+            showNotification('Berhasil disimpan!', 'Catatan monitoring kesehatan harian baru telah terintegrasi di riwayat kesehatan Anda.', 'success');
+        }
+
+        // ================= INTERACTIVE QUIZ =================
+        const quizQuestions = [
+            {
+                q: "1. Apa penyebab utama penyakit Gout Arthritis?",
+                options: [
+                    { text: "Virus influenza", correct: false },
+                    { text: "Penumpukan kristal asam urat pada sendi", correct: true },
+                    { text: "Kurang asupan kalsium harian", correct: false },
+                    { text: "Infeksi bakteri Streptococcus", correct: false }
+                ]
+            },
+            {
+                q: "2. Manakah gejala serangan akut Gout Arthritis di malam hari?",
+                options: [
+                    { text: "Nyeri hilang timbul setiap bulan sekali", correct: false },
+                    { text: "Sendi membengkak, kemerahan, terasa hangat dan sakit luar biasa", correct: true },
+                    { text: "Mati rasa / kebas di seluruh badan", correct: false },
+                    { text: "Muncul ruam gatal di lengan tangan saja", correct: false }
+                ]
+            },
+            {
+                q: "3. Bahan makanan manakah yang WAJIB DIBATASI karena memicu asam urat tinggi?",
+                options: [
+                    { text: "Susu rendah lemak", correct: false },
+                    { text: "Sayur wortel segar", correct: false },
+                    { text: "Jeroan hewan (hati, limpa, babat, usus) & Seafood", correct: true },
+                    { text: "Buah pisang dan pepaya matang", correct: false }
+                ]
+            },
+            {
+                q: "4. Apa langkah penanganan pre-hospital (di rumah) yang tepat saat terjadi nyeri gout mendadak?",
+                options: [
+                    { text: "Mengoleskan kompres hangat mendidih ke sendi yang merah", correct: false },
+                    { text: "Mengistirahatkan sendi & memberikan kompres dingin/es berlapis kain", correct: true },
+                    { text: "Memijat dan mengurut sendi dengan kuat", correct: false },
+                    { text: "Mengonsumsi jamu-jamuan sembarangan", correct: false }
+                ]
+            },
+            {
+                q: "5. Komplikasi gout arthritis jika dibiarkan kronis tanpa penanganan obat teratur adalah...",
+                options: [
+                    { text: "Gigi keropos", correct: false },
+                    { text: "Kerusakan sendi permanen, benjolan Tophi, dan Batu Ginjal", correct: true },
+                    { text: "Kadar gula darah langsung drop", correct: false },
+                    { text: "Serangan sesak napas akut kronis", correct: false }
+                ]
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizCorrectAnswers = 0;
+        let selectedOptionIndex = null;
+
+        function loadQuizQuestion() {
+            const questionData = quizQuestions[currentQuizIndex];
+            document.getElementById('quiz-progress').textContent = `Pertanyaan ${currentQuizIndex + 1} dari ${quizQuestions.length}`;
+            document.getElementById('quiz-question').textContent = questionData.q;
+
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            selectedOptionIndex = null;
+            document.getElementById('next-quiz-btn').disabled = true;
+
+            questionData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-4 rounded-xl border border-slate-200 hover:border-primary-500 hover:bg-slate-50 transition-all text-sm font-semibold flex items-center justify-between text-slate-800 focus:outline-none';
+                btn.innerHTML = `<span>${opt.text}</span> <i class="fa-regular fa-circle text-slate-300"></i>`;
+                btn.onclick = () => selectQuizOption(idx, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectQuizOption(index, element) {
+            const optionsContainer = document.getElementById('quiz-options');
+            const buttons = optionsContainer.getElementsByTagName('button');
+            
+            // Reset icons
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].className = 'w-full text-left p-4 rounded-xl border border-slate-200 hover:border-primary-500 hover:bg-slate-50 transition-all text-sm font-semibold flex items-center justify-between text-slate-800 focus:outline-none';
+                buttons[i].innerHTML = `<span>${quizQuestions[currentQuizIndex].options[i].text}</span> <i class="fa-regular fa-circle text-slate-300"></i>`;
+            }
+
+            // Highlight selected
+            element.className = 'w-full text-left p-4 rounded-xl border-2 border-primary-500 bg-primary-50/20 transition-all text-sm font-bold flex items-center justify-between text-slate-900 focus:outline-none';
+            element.innerHTML = `<span>${quizQuestions[currentQuizIndex].options[index].text}</span> <i class="fa-solid fa-circle-dot text-primary-600"></i>`;
+            
+            selectedOptionIndex = index;
+            document.getElementById('next-quiz-btn').disabled = false;
+        }
+
+        function nextQuizQuestion() {
+            // Check if correct
+            const currentOptions = quizQuestions[currentQuizIndex].options;
+            if (currentOptions[selectedOptionIndex].correct) {
+                quizCorrectAnswers++;
+            }
+
+            if (currentQuizIndex < quizQuestions.length - 1) {
+                currentQuizIndex++;
+                loadQuizQuestion();
+            } else {
+                // End Quiz
+                displayQuizResults();
+            }
+        }
+
+        function displayQuizResults() {
+            const finalScore = (quizCorrectAnswers / quizQuestions.length) * 100;
+            
+            document.getElementById('quiz-score-text').textContent = `${finalScore}%`;
+            
+            const badge = document.getElementById('quiz-badge');
+            badge.classList.remove('hidden');
+
+            if (finalScore >= 80) {
+                badge.className = 'px-4 py-1.5 rounded-full text-xs font-bold inline-block bg-emerald-100 text-emerald-800';
+                badge.innerHTML = 'Hasil: Baik Sekali 🏆';
+                showNotification('Luar biasa!', `Skor Anda ${finalScore}%. Anda telah memahami edukasi Gout Arthritis dengan sangat baik!`, 'success');
+            } else if (finalScore >= 60) {
+                badge.className = 'px-4 py-1.5 rounded-full text-xs font-bold inline-block bg-amber-100 text-amber-800';
+                badge.innerHTML = 'Hasil: Cukup Baik ⚠️';
+                showNotification('Bagus!', `Skor Anda ${finalScore}%. Sebaiknya tinjau kembali tips diet rendah purin agar pencegahan lebih maksimal.`, 'success');
+            } else {
+                badge.className = 'px-4 py-1.5 rounded-full text-xs font-bold inline-block bg-red-100 text-red-800';
+                badge.innerHTML = 'Hasil: Perlu Belajar Ulang ❗';
+                showNotification('Perlu Belajar Lagi', `Skor Anda ${finalScore}%. Anda dapat mengulang kuis kapan saja setelah membaca ulang materi edukasi.`, 'error');
+            }
+
+            // Reset Quiz for next play
+            currentQuizIndex = 0;
+            quizCorrectAnswers = 0;
+            loadQuizQuestion();
+        }
+
+        // ================= DOWNLOAD DOCUMENT GENERATOR =================
+        function downloadDocument(materiType) {
+            let title = '';
+            let contentHTML = '';
+
+            if (materiType === 'edukasi') {
+                title = 'Buku Saku Edukasi Gout Arthritis';
+                contentHTML = `
+                    <div style="font-family: Arial, sans-serif; padding: 20px; line-height: 1.6;">
+                        <h1 style="color: #16a34a; text-align: center;">Buku Saku Edukasi Gout Arthritis</h1>
+                        <p style="text-align: center; font-size: 12px; color: #666;">SMART GOUT CHECK - Inovasi Teknologi Kesehatan &copy; 2026</p>
+                        <hr style="border: 1px solid #16a34a; margin: 20px 0;">
+                        
+                        <h2>1. Apa itu Gout Arthritis?</h2>
+                        <p>Penyakit radang sendi kronik akibat pengendapan kristal asam urat pada struktur jaringan sendi.</p>
+                        
+                        <h2>2. Gejala Umum</h2>
+                        <ul>
+                            <li>Rasa nyeri luar biasa mendadak</li>
+                            <li>Sendi merah membengkak dan sangat kaku saat digerakkan</li>
+                            <li>Terasa panas dan hangat bila disentuh</li>
+                        </ul>
+                        
+                        <h2>3. Penanganan Serangan Akut di Rumah (Pre-Hospital)</h2>
+                        <ol>
+                            <li><strong>Rest:</strong> Istirahatkan sendi dari pergerakan berat.</li>
+                            <li><strong>Ice:</strong> Berikan kompres es dingin selama 15 menit menggunakan alas kain bersih.</li>
+                            <li><strong>Elevasi:</strong> Letakkan tungkai yang sakit lebih tinggi dari dada.</li>
+                            <li><strong>Hydration:</strong> Konsumsi air putih lebih dari 2 liter harian untuk membuang zat purin.</li>
+                        </ol>
+                        
+                        <h2>4. Penanganan Post-Hospital</h2>
+                        <ul>
+                            <li>Minum obat penurun kadar asam urat secara konsisten dan teratur sesuai dosis dokter.</li>
+                            <li>Kontrol darah secara berkala demi memantau kadar asam urat.</li>
+                        </ul>
+                    </div>
+                `;
+            } else if (materiType === 'diet') {
+                title = 'Panduan Diet Rendah Purin - Smart Gout';
+                contentHTML = `
+                    <div style="font-family: Arial, sans-serif; padding: 20px; line-height: 1.6;">
+                        <h1 style="color: #16a34a; text-align: center;">Tabel Diet Rendah Purin</h1>
+                        <p style="text-align: center; font-size: 12px; color: #666;">Panduan Makanan Pasien Gout Mandiri</p>
+                        <hr style="border: 1px solid #16a34a; margin: 20px 0;">
+                        
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                            <thead>
+                                <tr style="background-color: #16a34a; color: white;">
+                                    <th style="padding: 10px; border: 1px solid #ddd;">Makanan Dianjurkan (Aman)</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">Makanan Dibatasi / Dihindari</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top;">
+                                        <ul>
+                                            <li>Susu dan olahan rendah lemak</li>
+                                            <li>Sayuran berair banyak (labu siam, terong, mentimun, wortel)</li>
+                                            <li>Buah kaya vit C (jeruk, buah beri)</li>
+                                            <li>Banyak minum air putih (> 2 liter/hari)</li>
+                                        </ul>
+                                    </td>
+                                    <td style="padding: 10px; border: 1px solid #ddd; vertical-align: top;">
+                                        <ul>
+                                            <li>Jeroan sapi/ayam (hati, limpa, usus)</li>
+                                            <li>Seafood (cumi-cumi, udang, kepiting, sarden kalengan)</li>
+                                            <li>Minuman beralkohol & bersoda manis</li>
+                                            <li>Makanan olahan berpengawet tinggi</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            } else if (materiType === 'laporan') {
+                title = 'Laporan Hasil Monitoring Asuhan Mandiri';
+                let tableRows = '';
+                healthRecords.forEach(rec => {
+                    tableRows += `
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #ddd;">${rec.date}</td>
+                            <td style="padding: 8px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Skala ${rec.pain}</td>
+                            <td style="padding: 8px; border: 1px solid #ddd;">${rec.location}</td>
+                            <td style="padding: 8px; border: 1px solid #ddd;">${rec.food}</td>
+                            <td style="padding: 8px; border: 1px solid #ddd;">${rec.activity}</td>
+                        </tr>
+                    `;
+                });
+
+                contentHTML = `
+                    <div style="font-family: Arial, sans-serif; padding: 20px; line-height: 1.6;">
+                        <h1 style="color: #16a34a; text-align: center;">Laporan Monitoring SMART GOUT CHECK</h1>
+                        <hr style="border: 1px solid #16a34a; margin: 20px 0;">
+                        
+                        <h3>Data Riwayat Nyeri Sendi Pasien</h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                            <thead>
+                                <tr style="background-color: #f2f2f2;">
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Tanggal</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Skala Nyeri</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Lokasi Sendi</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Pola Makan</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Aktivitas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${tableRows}
+                            </tbody>
+                        </table>
+                        
+                        <p style="margin-top: 30px; font-size: 11px; color: #888; text-align: right;">Dicetak via Aplikasi SMART GOUT CHECK - Universitas Ngudi Waluyo</p>
+                    </div>
+                `;
+            }
+
+            // Print Trigger (Opens beautiful print preview instantly for user saving)
+            const printWindow = window.open('', '_blank', 'width=800,height=600');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>${title}</title>
+                    <style>
+                        body { font-family: sans-serif; margin: 0; padding: 20px; }
+                        @media print {
+                            body { padding: 0; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${contentHTML}
+                    <script>
+                        window.onload = function() {
+                            window.print();
+                        }
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+
+        // Initialize App on Window Load
+        window.onload = function() {
+            renderHealthTable();
+            initHealthChart();
+            loadQuizQuestion();
+        }
+    </script>
+</body>
+</html>
